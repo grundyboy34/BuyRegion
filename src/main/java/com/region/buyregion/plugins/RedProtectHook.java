@@ -1,8 +1,6 @@
 package com.region.buyregion.plugins;
 
-import br.net.fabiozumbi12.RedProtect.Bukkit.RedProtect;
-import br.net.fabiozumbi12.RedProtect.Bukkit.Region;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -11,6 +9,9 @@ import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+
+import br.net.fabiozumbi12.RedProtect.Bukkit.RedProtect;
+import br.net.fabiozumbi12.RedProtect.Bukkit.Region;
 
 public class RedProtectHook implements PluginsHook {
 
@@ -28,6 +29,13 @@ public class RedProtectHook implements PluginsHook {
             return new RedRegion(RedProtect.get().getAPI().getRegion(location));
         }
         return null;
+    }
+    
+    @Override
+    public ArrayList<PluginRegion> getRegions(Location location) {
+    	ArrayList<PluginRegion> res = new ArrayList<PluginRegion>();
+    	res.add(getRegion(location));
+    	return res;
     }
 
     class RedRegion implements PluginRegion {

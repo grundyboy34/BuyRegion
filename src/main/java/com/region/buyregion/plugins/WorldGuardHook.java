@@ -40,6 +40,18 @@ public class WorldGuardHook implements PluginsHook {
         }
         return null;
     }
+    
+    @Override
+    public ArrayList<PluginRegion> getRegions(Location location) {
+    	ArrayList<PluginRegion> res = new ArrayList<PluginRegion>();
+    	 regionManager = getWorldGuardRegionManager(location.getWorld().getName());
+    	 if (regionManager != null && regionManager.getApplicableRegions(BlockVector3.at(location.getBlockX(), location.getBlockY(), location.getBlockZ())).size() > 0) {
+             for (ProtectedRegion region : regionManager.getApplicableRegions(BlockVector3.at(location.getBlockX(), location.getBlockY(), location.getBlockZ())).getRegions()) {
+            	 res.add(new WERegion(region));
+             }
+         }
+    	 return res;
+    }
 
     class WERegion implements PluginRegion {
         private ProtectedRegion region;

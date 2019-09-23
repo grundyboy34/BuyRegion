@@ -1,5 +1,6 @@
 package com.region.buyregion.plugins;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ public interface PluginsHook {
 
     PluginRegion getRegion(String regionName, String world);
     PluginRegion getRegion(Location location);
+    ArrayList<PluginRegion> getRegions(Location location);
 
     //Wrapper for plugin region
     interface PluginRegion {

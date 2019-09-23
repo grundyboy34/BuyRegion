@@ -2,6 +2,8 @@ package com.region.buyregion;
 
 import com.region.buyregion.helpers.ChatHelper;
 import com.region.buyregion.plugins.PluginsHook;
+import com.region.buyregion.plugins.PluginsHook.PluginRegion;
+
 import net.md_5.bungee.api.ChatColor;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
@@ -250,6 +252,21 @@ public class BuyRegionEvents implements Listener {
                         event.setLine(0, "-invalid-");
                         return;
                     }
+                    
+                    boolean inRegion = false;
+                    if (region.getName() != null && !region.getName().isEmpty()) {
+	                    for (PluginRegion tregion : this.plugin.pluginsHooks.getRegions(event.getBlock().getLocation())) {
+	                    	if (tregion.getName() != null && !tregion.getName().isEmpty() && tregion.getName().equals(region.getName())) {
+	                    		inRegion = true;
+	                    		break;
+	                    	}
+	                    }
+                    }
+                    if (!inRegion) { //compare by name
+                    	event.getPlayer().sendMessage(ChatHelper.warning("SignNotInRegion"));
+                    	event.setLine(0, "-invalid-");
+                    	return;
+                    }
 
                     event.setLine(1, regionName);
 
@@ -322,7 +339,9 @@ public class BuyRegionEvents implements Listener {
                 return;
             }
 
-            if (!player.hasPermission("buyregion.create") || !region.isOwner(player) || region.isMember(player)) {
+           // if (!player.hasPermission("buyregion.create") || !region.isOwner(player) || region.isMember(player)) {
+            if (!player.hasPermission("buyregion.create") || !region.isOwner(player)) {
+            	this.plugin.getLogger().log(Level.SEVERE, "Sign destruction prevented! " + player.hasPermission("buyregion.create") + " - " + region.isOwner(player));
                 event.setCancelled(true);
             }
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 InvalidPriceTime: Invalid sign. Invalid price or timespan!
 RegionNoExist: Invalid sign. Region doesn't exist!
+SignNotInRegion: Invalid sign. Sign not in target region!
 EvictedFrom: You have been evicted from %s
 InvalidArg: "Invalid argument. Accepted values: true, false, yes, no, off, on"
 RenewTurnOff: Auto-Renew has been turned OFF for you.
